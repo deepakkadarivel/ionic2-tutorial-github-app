@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, Modal} from 'ionic-angular';
 import {GitHubService} from '../../services/github.ts';
 import {DetailsPage} from '../details/details'
 
@@ -11,7 +11,7 @@ export class HomePage {
   public foundRepos;
   public username;
 
-  constructor(private github: GitHubService, private nav: NavController) {}
+  constructor(private github: GitHubService, private nav: NavController) { }
 
   getRepos() {
     this.github.getRepos(this.username).subscribe(
@@ -24,6 +24,11 @@ export class HomePage {
   }
 
   gotoDetails(repo) {
-    this.nav.push(DetailsPage, {repo: repo});
+    let profileModal = Modal.create(DetailsPage, { repo: repo });
+    profileModal.onDismiss(data => {
+      console.log(data);
+    });
+    this.nav.present(profileModal);
+    // this.nav.push(DetailsPage, {repo: repo});
   }
 }

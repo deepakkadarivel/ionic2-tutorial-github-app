@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 import {GitHubService} from '../../services/github';
 
 /*
@@ -16,7 +16,7 @@ export class DetailsPage {
   public readme = '';
   public repo;
 
-  constructor(private nav: NavController, private github: GitHubService, private navParams: NavParams) {
+  constructor(private nav: NavController, private github: GitHubService, private navParams: NavParams, private viewController: ViewController) {
     this.repo = navParams.get('repo');
 
     this.github.getDetails(this.repo).subscribe(
@@ -32,6 +32,10 @@ export class DetailsPage {
       },
       () => console.log("getDetails Completed")
     );
+  }
+
+  dismiss() {
+    this.viewController.dismiss();
   }
 
 }
